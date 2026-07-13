@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --textcolor: #7a858631;
+  --secondrytext: #000000;
+  --street: #269e9e;
+}
+@font-face {
+  font-family: "Helvetica";
+  src: url("@/../../../public/fonts/HelveticaNowDisplay-Medium.eot");
+  src:
+    local("Helvetica Now Display Medium"),
+    local("HelveticaNowDisplay-Medium"),
+    url("/fonts/HelveticaNowDisplay-Medium.eot?#iefix")
+      format("embedded-opentype"),
+    url("/fonts/HelveticaNowDisplay-Medium.woff2") format("woff2"),
+    url("/fonts/HelveticaNowDisplay-Medium.woff") format("woff"),
+    url("/fonts/HelveticaNowDisplay-Medium.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+* {
+  overflow-x: hidden;
+
+  cursor: none;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Helvetica;
+}
