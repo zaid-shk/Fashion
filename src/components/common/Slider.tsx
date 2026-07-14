@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { motion, AnimatePresence, easeOut, easeIn } from "motion/react";
+import { motion, AnimatePresence, easeOut, easeIn, easeInOut } from "motion/react";
 import { ArrowLeft, ArrowRight, Send } from "lucide-react";
 
 const defaultItems = [
@@ -12,7 +12,7 @@ const defaultItems = [
   },
   {
     image:
-      "https://i.pinimg.com/736x/c0/57/bd/c057bd822c0f1de90faa3d94231cce7e.jpg",
+      "https://i.pinimg.com/736x/93/a4/4b/93a44be9d316ef33af5492f60dc8256b.jpg",
     text: "Urban Street Wear",
   },
   {
@@ -20,31 +20,42 @@ const defaultItems = [
       "https://i.pinimg.com/736x/b3/34/c8/b334c8b573494374222e465046f90918.jpg",
     text: "Classic Denim Jacket",
   },
-  
+  {
+    image:
+      "https://i.pinimg.com/736x/b7/df/c9/b7dfc93da7c501c7834eaf8a640462f0.jpg",
+    text: "Silk Embroidered Kurta",
+  },
+  {
+    image:
+      "https://i.pinimg.com/736x/a0/9d/bd/a09dbd8f6d037e501146ff35012e42aa.jpg",
+    text: "Bohemian Maxi Dress",
+  },
 ];
 
 const Slider = () => {
   const [activeIndex, setActiveIndex] = useState(1);
 
+  const totalItems = 5;
+
   const handleNext = () => {
-    setActiveIndex((prev) => (prev + 1) % 3);
+    setActiveIndex((prev) => (prev + 1) % totalItems);
   };
 
   const handlePrev = () => {
-    setActiveIndex((prev) => (prev - 1 + 3) % 3);
+    setActiveIndex((prev) => (prev - 1 + totalItems) % totalItems);
   };
 
   const renderedItems = useMemo(() => {
     return defaultItems.map((item, index) => {
       let offset = index - activeIndex;
-      if (offset < -1) offset += 3;
-      if (offset > 1) offset -= 3;
+      if (offset < -2) offset += totalItems;
+      if (offset > 2) offset -= totalItems;
       return { ...item, offset, originalIndex: index };
     });
   }, [activeIndex]);
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-x-hidden select-none py-10">
+    <div className="relative w-screen min-h-screen flex flex-col items-center justify-center overflow-x-hidden select-none py-6">
       {/* Ambient background glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen h-[600px] rounded-full bg-amber-500/5 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 left-1/3 w-[400px] h-[400px] rounded-full bg-purple-500/5 blur-[100px] pointer-events-none" />
@@ -54,63 +65,84 @@ const Slider = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="text-center mb-10 z-10"
+        className="text-center mb-5 z-10"
       >
-        <span className=" text-4xl font-bold tracking-[0.20em] uppercase mb-3 block">
+        <span className=" text-4xl font-bold tracking-[0.20em] uppercase mb-1 block">
           Desi roots. modern vibes.
         </span>
         <h2 className="text-black text-xl md:text-2xl font-light tracking-widest uppercase">
-          <span className="text-amber-400/80">Ethinic wear </span> |{" "}
-          <span className="text-[#269E9E]/80">Street wear </span> | for every
+          <span className="text-amber-400/80"> Ethinic wear </span> |
+          <span className="text-[#269E9E]/80"> Street wear </span> | for every
           you
         </h2>
       </motion.div>
 
       {/* Cards Viewport Container */}
-      <div className="relative w-full max-w-6xl h-[520px] flex items-center justify-center z-10 overflow-visible">
+      <div className="relative w-full h-[450px] flex items-center justify-center z-10 overflow-visible">
         {renderedItems.map((item) => {
-          const { offset, image, text, subtitle, originalIndex } = item;
+          const { offset, image, text, originalIndex } = item;
           const isActive = offset === 0;
 
           return (
             <motion.div
               key={originalIndex}
               animate={{
-                x: offset === 0 ? 0 : offset === -1 ? -330 : 330,
-                y: offset === 0 ? -10 : 45,
-                rotate: offset === 0 ? 0 : offset === -1 ? -4 : 4,
-                scale: offset === 0 ? 1 : 0.82,
-                opacity: offset === 0 ? 1 : 0.5,
+                x:
+                  offset === 0
+                    ? 0
+                    : offset === -1
+                      ? -370
+                      : offset === 1
+                        ? 370
+                        : offset === -2
+                          ? -670
+                          : 670,
+                y: offset === 0 ? -10 : offset === -2 || offset === 2 ? 70 : 45,
+                rotate:
+                  offset === 0
+                    ? 0
+                    : offset === -1
+                      ? -4
+                      : offset === 1
+                        ? 4
+                        : offset === -2
+                          ? -6
+                          : 6,
+                scale: offset === 0 ? 1 : Math.abs(offset) === 1 ? 0.82 : 0.7,
+                opacity: offset === 0 ? 1 : Math.abs(offset) === 1 ? 0.5 : 0.3,
               }}
               transition={{
                 type: "spring",
+                // ease:easeInOut,
                 stiffness: 120,
                 damping: 20,
                 mass: 1.2,
               }}
               onClick={() => {
-                if (offset === -1) handlePrev();
-                if (offset === 1) handleNext();
+                if (offset === -1 || offset === -2) handlePrev();
+                if (offset === 1 || offset === 2) handleNext();
               }}
               style={{
                 zIndex: isActive ? 30 : 20,
                 left: "50%",
                 top: "50%",
               }}
-              className="absolute -translate-x-1/2 -translate-y-1/2 w-[280px] md:w-[300px] h-[450px] md:h-[490px] rounded-3xl overflow-hidden cursor-pointer group"
+              className="absolute -translate-x-1/2 -translate-y-1/2 w-[280px] md:w-[325px] h-[450px] md:h-[420px] rounded-2xl overflow-hidden cursor-pointer group"
             >
               {/* Outer glow ring for active card */}
               {isActive && (
                 <motion.div
-                  layoutId="card-glow"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
                   className="absolute -inset-[2px] rounded-3xl bg-gradient-to-b from-amber-400/40 via-amber-600/20 to-transparent z-0 pointer-events-none"
-                  transition={{ type: "spring", stiffness: 120, damping: 20 }}
                 />
               )}
 
               {/* Card inner container */}
               <div
-                className={`relative w-full h-full rounded-3xl overflow-hidden border transition-all duration-500
+                className={`relative w-full h-full rounded-xl overflow-hidden border border-white transition-all duration-500
                    bg-neutral-900`}
               >
                 {/* Card Image */}
@@ -122,8 +154,8 @@ const Slider = () => {
                 />
 
                 {/* Multi-layer gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/10 pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {/* <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/10 pointer-events-none" /> */}
+                {/* <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" /> */}
 
                 {/* Shimmer effect on hover */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
@@ -142,7 +174,7 @@ const Slider = () => {
       </div>
 
       {/* Navigation Controls */}
-      <div className="flex items-center justify-center h-20 gap-5 mt-5 z-40">
+      <div className="flex items-center justify-center h-20 gap-5 mt-2">
         {/* Prev Button */}
         <motion.button
           onClick={handlePrev}
@@ -170,10 +202,10 @@ const Slider = () => {
                 </div> */}
 
         <motion.button
-          transition={{ duration: 0.4, ease:easeIn }}
+          transition={{ duration: 0.4, ease: easeIn }}
           whileHover={{ rotate: -15 }}
           whileTap={{ scale: 0.95 }}
-          className="px-10 py-3.5 rotate-8 overflow-hidden rounded-full text-white font-bold bg-neutral-950 text-sm tracking-[0.25em] uppercase"
+          className="px-10 py-3.5 rotate-8 overflow-hidden rounded-2xl text-white font-bold bg-neutral-950 text-sm tracking-[0.25em] uppercase"
         >
           Shop Now
         </motion.button>
