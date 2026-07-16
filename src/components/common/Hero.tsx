@@ -1,5 +1,6 @@
 import Image from "next/image";
 import img from "../../../public/images/two.png";
+import Button from "../ui/Button";
 
 const Hero = () => {
   const img1 =
@@ -19,12 +20,27 @@ const Hero = () => {
         <h3 className="uppercase py-5 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl  leading-tight tracking-wide ">
           Flat 20% off on <br /> newest styles <br /> for you-
         </h3>
-        <div className="rounded-xl cursor-pointer flex items-center justify-center bg-(--textcolor) backdrop-blur-sm w-45 py-2 px-4 ">
-          <h3 className="text-xl text-(--secondrytext)">Discover more</h3>
+        <div className="">
+          <Button
+            children="Discover Now"
+            variant="outline"
+            className="px-5 py-1.5 tracking-wider rounded-lg bg-neutral-900/10 backdrop-blur-sm transition-all duration-300 outline-0"
+            whileTap={{ scale: 0.9 }}
+            transition={{
+              duration: 0.1,
+              whileTap: {
+                duration: 0.1,
+              },
+            }}
+            // animate={{color:'black',backgroundColor:'none'}}
+          />
         </div>
       </div>
-      <div className="absolute bottom-10 right-5 hidden md:block">
-          <p className="capitalize w-95 text-xl leading-tight tracking-wider">Explore the streets of fashion the way You never Imagined, we create The most unique blend of modern aesthetics and elegant S</p>
+      <div className="absolute bottom-10 right-15 hidden md:block">
+        <p className="capitalize w-95 text-xl text-right leading-tight tracking-wider">
+          Explore the streets of fashion the way You never Imagined, we create
+          The most unique blend of modern aesthetics and elegant S
+        </p>
       </div>
     </div>
   );

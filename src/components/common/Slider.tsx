@@ -1,8 +1,16 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { motion, AnimatePresence, easeOut, easeIn, easeInOut } from "motion/react";
+import {
+  motion,
+  AnimatePresence,
+  easeOut,
+  easeIn,
+  easeInOut,
+} from "motion/react";
 import { ArrowLeft, ArrowRight, Send } from "lucide-react";
+import MyImg from "@/../public/images/My.png";
+import Image from "next/image";
 
 const defaultItems = [
   {
@@ -11,8 +19,7 @@ const defaultItems = [
     text: "Yellow parachute jump suit",
   },
   {
-    image:
-      "https://i.pinimg.com/736x/93/a4/4b/93a44be9d316ef33af5492f60dc8256b.jpg",
+    image: MyImg,
     text: "Urban Street Wear",
   },
   {
@@ -30,26 +37,39 @@ const defaultItems = [
       "https://i.pinimg.com/736x/a0/9d/bd/a09dbd8f6d037e501146ff35012e42aa.jpg",
     text: "Bohemian Maxi Dress",
   },
+  {
+    image:
+      "https://i.pinimg.com/736x/b7/df/c9/b7dfc93da7c501c7834eaf8a640462f0.jpg",
+    text: "Silk Embroidered Kurta",
+  },
+  {
+    image:
+      "https://i.pinimg.com/736x/a0/9d/bd/a09dbd8f6d037e501146ff35012e42aa.jpg",
+    text: "Bohemian Maxi Dress",
+  },
 ];
 
 const Slider = () => {
   const [activeIndex, setActiveIndex] = useState(1);
+  const [direction, setDirection] = useState(0);
 
-  const totalItems = 5;
+  const totalItems = 7;
 
   const handleNext = () => {
+    setDirection(1);
     setActiveIndex((prev) => (prev + 1) % totalItems);
   };
 
   const handlePrev = () => {
+    setDirection(-1);
     setActiveIndex((prev) => (prev - 1 + totalItems) % totalItems);
   };
 
   const renderedItems = useMemo(() => {
     return defaultItems.map((item, index) => {
       let offset = index - activeIndex;
-      if (offset < -2) offset += totalItems;
-      if (offset > 2) offset -= totalItems;
+      if (offset < -3) offset += totalItems;
+      if (offset > 3) offset -= totalItems;
       return { ...item, offset, originalIndex: index };
     });
   }, [activeIndex]);
@@ -91,12 +111,16 @@ const Slider = () => {
                   offset === 0
                     ? 0
                     : offset === -1
-                      ? -370
+                      ? -330
                       : offset === 1
-                        ? 370
+                        ? 330
                         : offset === -2
-                          ? -670
-                          : 670,
+                          ? -600
+                          : offset === 2
+                            ? 600
+                            : offset === -3
+                              ? -820
+                              : 820,
                 y: offset === 0 ? -10 : offset === -2 || offset === 2 ? 70 : 45,
                 rotate:
                   offset === 0
@@ -108,15 +132,35 @@ const Slider = () => {
                         : offset === -2
                           ? -6
                           : 6,
-                scale: offset === 0 ? 1 : Math.abs(offset) === 1 ? 0.82 : 0.7,
-                opacity: offset === 0 ? 1 : Math.abs(offset) === 1 ? 0.5 : 0.3,
+                scale:
+                  offset === 0
+                    ? 1
+                    : Math.abs(offset) === 1
+                      ? 0.82
+                      : Math.abs(offset) === 2
+                        ? 0.7
+                        : 0.55,
+                opacity:
+                  (direction === 1 && offset === 3) ||
+                  (direction === -1 && offset === -3)
+                    ? 0
+                    : offset === 0
+                      ? 1
+                      : Math.abs(offset) === 1
+                        ? 0.5
+                        : Math.abs(offset) === 2
+                          ? 0.3
+                          : 0.15,
               }}
               transition={{
                 type: "spring",
-                // ease:easeInOut,
                 stiffness: 120,
                 damping: 20,
                 mass: 1.2,
+
+                opacity: {
+                  duration: 0,
+                },
               }}
               onClick={() => {
                 if (offset === -1 || offset === -2) handlePrev();
@@ -146,9 +190,10 @@ const Slider = () => {
                    bg-neutral-900`}
               >
                 {/* Card Image */}
-                <img
+                <Image
                   src={image}
                   alt={text}
+                  fill
                   draggable={false}
                   className="w-full h-full object-cover select-none pointer-events-none transition-transform duration-700 ease-out group-hover:scale-110"
                 />
@@ -179,7 +224,7 @@ const Slider = () => {
         <motion.button
           onClick={handlePrev}
           whileTap={{ scale: 0.9 }}
-          className="w-12 h-12 rounded-full outline-0 bg-black/20 backdrop-blur-md flex items-center justify-center"
+          className="w-12 h-12 rounded-full outline-0 bg-black/10 backdrop-blur-md flex items-center justify-center"
           aria-label="Previous slide"
         >
           <ArrowLeft />
@@ -202,10 +247,10 @@ const Slider = () => {
                 </div> */}
 
         <motion.button
-          transition={{ duration: 0.4, ease: easeIn }}
-          whileHover={{ rotate: -15 }}
-          whileTap={{ scale: 0.95 }}
-          className="px-10 py-3.5 rotate-8 overflow-hidden rounded-2xl text-white font-bold bg-neutral-950 text-sm tracking-[0.25em] uppercase"
+          // transition={{ duration: 0.4, ease: easeIn }}
+
+          whileTap={{ scale: 0.9 }}
+          className="px-10 py-3.5 overflow-hidden rounded-2xl text-white font-bold bg-neutral-950 text-sm tracking-[0.25em] uppercase"
         >
           Shop Now
         </motion.button>
