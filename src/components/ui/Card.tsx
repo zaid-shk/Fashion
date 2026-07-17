@@ -1,7 +1,15 @@
 import Image from "next/image";
 import { motion } from "motion/react";
 
-const Card = ({ height, width, title, image, blur = false }) => {
+type CardProps = {
+  height?: number | string;
+  width?: number | string;
+  title?: string;
+  blur?: boolean;
+  image?: string;
+};
+
+const Card = ({ height, width, title, image, blur = false }: CardProps) => {
   return (
     <div>
       <motion.div className={`relative w-[${width}] h-[${height}]`}>

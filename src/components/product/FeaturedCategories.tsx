@@ -26,11 +26,11 @@ const FeaturedCategories = () => {
     },
   ];
   return (
-    <div className=" h-screen">
-      <h2 className="text-2xl px-12 tracking-wider py-2">
+    <div className=" h-screen px-12">
+      <h2 className="text-2xl  tracking-wider py-2">
         Featured Categories
       </h2>
-      <div className="flex justify-between px-20 py-5">
+      <div className="flex justify-between py-5">
         {products.map((item, index) => {
           // console.log(item);
 

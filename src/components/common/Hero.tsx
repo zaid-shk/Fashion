@@ -25,14 +25,13 @@ const Hero = () => {
             children="Discover Now"
             variant="outline"
             className="px-5 py-1.5 tracking-wider rounded-lg bg-neutral-900/10 backdrop-blur-sm transition-all duration-300 outline-0"
-            whileTap={{ scale: 0.9 }}
+            whileTap={{
+              scale: 0.9,
+            }}
             transition={{
               duration: 0.1,
-              whileTap: {
-                duration: 0.1,
-              },
             }}
-            // animate={{color:'black',backgroundColor:'none'}}
+            animate={{ color: "black", backgroundColor: "none", }}
           />
         </div>
       </div>

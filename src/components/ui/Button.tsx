@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { ReactNode } from "react";
 import clsx from "clsx";
 import {
   motion,
@@ -10,7 +10,7 @@ import {
 } from "motion/react";
 
 type ButtonProps = {
-  children: ReactNode;
+  children?: ReactNode;
 
   variant?: "primary" | "secondary" | "outline" | "secondOutline" | "danger";
 
