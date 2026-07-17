@@ -28,7 +28,6 @@ const Navbar = () => {
 
         <div className="flex gap-6">
           {links.map((item) => {
-
             return (
               <Link
                 key={item.to}

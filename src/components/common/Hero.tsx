@@ -13,7 +13,7 @@ const Hero = () => {
           alt="hero"
           width={1920}
           height={1080}
-          className="h-full w-full rounded-2xl object-cover "
+          className="h-full w-full rounded-xl object-cover "
         />
       </div>
       <div className="absolute text-white font-bold xl:top-10 xl:left-15 lg:top-5 lg:left-10 md:top-5 md:left-10">

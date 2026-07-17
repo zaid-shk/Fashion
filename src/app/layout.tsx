@@ -22,7 +22,7 @@ export default function RootLayout({
           <CursorProvider>
             <Navbar />
             {children}
-            {/* <Footer /> */}
+            <Footer />
           </CursorProvider>
         </LenisProvider>
       </body>

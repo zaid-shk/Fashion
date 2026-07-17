@@ -1,12 +1,5 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --textcolor: #7a858631;
-  --secondrytext: #000000;
-  --street: #269e9e;
-}
 @font-face {
   font-family: "Helvetica";
   src: url("@/../../../public/fonts/HelveticaNowDisplay-Medium.eot");
@@ -21,20 +14,114 @@
   font-weight: 200;
   font-style: normal;
 }
+/* Default browser scrollbar hide */
+html {
+  scrollbar-width: none; /* Firefox */
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Edge, Safari */
+}
+* {
+  overflow-x: hidden;
+  cursor: none;
+  overflow-y: hidden;
+}
+
+:root {
+  --background: #fffbf4;
+  --blackcolor: #1f1f1f;
+  --teal: #1b9a9a;
+  --orange: #e9933d;
+  --white: #ffffff;
+  --accentcolor: #dfdad7;
+
+  /* Carousel sizing variables */
+  --carousel-spacing: 110px;
+  --carousel-far-spacing: 190px;
+  --carousel-scale-side: 0.8;
+  --carousel-scale-far: 0.65;
+  --carousel-translate-y-side: 24px;
+  --carousel-translate-y-far: 48px;
+}
 
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-blackcolor: var(--blackcolor);
+  --color-teal: var(--teal);
+  --color-orange: var(--orange);
+  --color-white: var(--white);
+  --color-accentcolor: var(--accentcolor);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
-* {
-  overflow-x: hidden;
+@media (min-width: 640px) {
+  :root {
+    --carousel-spacing: 160px;
+    --carousel-far-spacing: 280px;
+    --carousel-scale-side: 0.85;
+    --carousel-scale-far: 0.7;
+    --carousel-translate-y-side: 32px;
+    --carousel-translate-y-far: 64px;
+  }
+}
 
-  cursor: none;
+@media (min-width: 768px) {
+  :root {
+    --carousel-spacing: 240px;
+    --carousel-far-spacing: 440px;
+    --carousel-scale-side: 0.9;
+    --carousel-scale-far: 0.8;
+    --carousel-translate-y-side: 40px;
+    --carousel-translate-y-far: 80px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --carousel-spacing: 380px;
+    --carousel-far-spacing: 730px;
+    --carousel-scale-side: 0.95;
+    --carousel-scale-far: 0.85;
+    --carousel-translate-y-side: 48px;
+    --carousel-translate-y-far: 146px;
+  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Helvetica;
+}
+.custom-scrollbar {
+  position: fixed;
+  top: 0;
+  right: 6px;
+  width: 6px;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.custom-scrollbar-thumb {
+  position: absolute;
+  right: 0;
+
+  width: 4px;
+  height: 45px;
+
+  border-radius: 999px;
+  background: #555;
+
+  transform: translateY(-50%);
+
+  transition:
+    height 0.4s ease,
+    width 0.4s ease;
+}
+
+.custom-scrollbar.is-scrolling .custom-scrollbar-thumb {
+  width: 6px;
+  height: 120px;
 }

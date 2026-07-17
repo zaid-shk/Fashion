@@ -54,20 +54,17 @@ const Products = [
     price: "$5,600",
   },
 ];
-
-const Collections = () => {
+const BestSeller = () => {
   const Link = [
     { name: "trending" },
     { name: "New" },
     { name: "summer" },
     { name: "Bestsellers" },
   ];
-  // console.log(Images);
-
   return (
     <div>
-      <div className="flex justify-between items-center px-23">
-        <h3 className="text-2xl tracking-wider py-2">Collections</h3>
+      <div className="flex justify-between items-center px-23 py-5">
+        <h3 className="text-2xl tracking-widest py-2 px-2">Best Seller</h3>
         <div className="flex gap-5 ">
           {Link.map((item, index) => {
             // console.log(item, index);
@@ -119,27 +116,8 @@ const Collections = () => {
           );
         })}
       </div>
-      <div className="flex justify-center py-5">
-        <Button
-          children="Load More"
-          type="button"
-          className="px-5 py-2 rounded-md capitalize text-xl tracking-wider"
-          whileTap={{ scale: 0.8 }}
-          variant="outline"
-          transition={{ duration: 0.2, ease: easeOut }}
-          whileHover={{
-            backgroundColor: "black",
-            color: "white",
-            transition: { duration: 0.5 },
-          }}
-          animate={{
-            backgroundColor: "white",
-            color: "black",
-          }}
-        />
-      </div>
     </div>
   );
 };
 
-export default Collections;
+export default BestSeller;
