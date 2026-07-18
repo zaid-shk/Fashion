@@ -1,23 +1,19 @@
-import Image from "next/image";
-import Hero from "@/components/common/Hero";
-import Slider from "@/components/common/Slider";
-import FeaturedCategories from "@/components/product/FeaturedCategories";
-import Card from "@/components/ui/Card";
-import Button from "@/components/ui/Button";
-import Collections from "@/components/common/Collections";
-import BestSeller from "@/components/common/BestSeller";
-import Line from "@/components/common/Line";
+import Hero from "@/components/sections/Hero";
+import Slider from "@/components/sections/Slider";
+import FeaturedCategories from "@/components/sections/FeaturedCategories";
+import Collections from "@/components/sections/Collections";
+import BestSeller from "@/components/sections/BestSeller";
+import Line from "@/components/sections/Line";
 
 export default function Home() {
   return (
-    <div className="">
+    <div>
       <Hero />
       <Slider />
       <FeaturedCategories />
       <Collections />
       <BestSeller />
       <Line />
-      {/* <Card height="400px" width="300px" title='Men' /> */}
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import Navbar from "@/components/layout/Navbar";
+import NavbarWrapper from "@/components/layout/NavbarWrapper";
 import Footer from "@/components/layout/Footer";
-import LenisProvider from "@/components/LenisProvider";
-import CursorProvider from "@/components/CursorProvider";
+import LenisProvider from "@/components/providers/LenisProvider";
+import CursorProvider from "@/components/providers/CursorProvider";
 
 export const metadata: Metadata = {
   title: "Fashion",
@@ -20,7 +20,7 @@ export default function RootLayout({
       <body>
         <LenisProvider>
           <CursorProvider>
-            <Navbar />
+            <NavbarWrapper />
             {children}
             <Footer />
           </CursorProvider>

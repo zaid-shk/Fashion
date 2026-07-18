@@ -8,30 +8,17 @@ export default function LenisProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [scrolling, setScrolling] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
-    const lenis = new Lenis({
-      autoRaf: true,
-    });
-
-    let timeout: ReturnType<typeof setTimeout>;
+    const lenis = new Lenis({ autoRaf: true });
 
     lenis.on("scroll", ({ progress }) => {
-      setScrolling(true);
       setScrollProgress(progress);
-
-      clearTimeout(timeout);
-
-      timeout = setTimeout(() => {
-        setScrolling(false);
-      }, 400);
     });
 
     return () => {
       lenis.destroy();
-      clearTimeout(timeout);
     };
   }, []);
 
@@ -39,7 +26,7 @@ export default function LenisProvider({
     <>
       {children}
 
-      <div className={`custom-scrollbar ${scrolling ? "is-scrolling" : ""}`}>
+      <div className="custom-scrollbar">
         <div
           className="custom-scrollbar-thumb"
           style={{

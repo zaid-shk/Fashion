@@ -4,7 +4,6 @@ import React, { ReactNode } from "react";
 import clsx from "clsx";
 import {
   motion,
-  animate,
   type TargetAndTransition,
   type Transition,
 } from "motion/react";

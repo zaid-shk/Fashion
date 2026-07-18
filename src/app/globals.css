@@ -2,12 +2,9 @@
 
 @font-face {
   font-family: "Helvetica";
-  src: url("@/../../../public/fonts/HelveticaNowDisplay-Medium.eot");
   src:
     local("Helvetica Now Display Medium"),
     local("HelveticaNowDisplay-Medium"),
-    url("/fonts/HelveticaNowDisplay-Medium.eot?#iefix")
-      format("embedded-opentype"),
     url("/fonts/HelveticaNowDisplay-Medium.woff2") format("woff2"),
     url("/fonts/HelveticaNowDisplay-Medium.woff") format("woff"),
     url("/fonts/HelveticaNowDisplay-Medium.ttf") format("truetype");
@@ -22,10 +19,8 @@ html {
 html::-webkit-scrollbar {
   display: none; /* Chrome, Edge, Safari */
 }
-* {
-  overflow-x: hidden;
+html {
   cursor: none;
-  overflow-y: hidden;
 }
 
 :root {
@@ -91,7 +86,7 @@ html::-webkit-scrollbar {
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: var(--blackcolor);
   font-family: Helvetica;
 }
 .custom-scrollbar {
@@ -119,9 +114,4 @@ body {
   transition:
     height 0.4s ease,
     width 0.4s ease;
-}
-
-.custom-scrollbar.is-scrolling .custom-scrollbar-thumb {
-  width: 6px;
-  height: 120px;
 }
