@@ -22,7 +22,7 @@ const Hero = () => {
         <div>
           <Button
             variant="outline"
-            className="px-5 py-1.5 md:px-6 md:py-2 tracking-wider rounded-lg bg-white/10 backdrop-blur-md border-white/30 text-white hover:bg-white hover:text-black"
+            className="px-5 py-1.5 md:px-6 md:py-2 tracking-widest rounded-lg bg-white/10 backdrop-blur-md border-white/30 text-white/90 hover:bg-black hover:text-white hover:border-0"
             whileTap={{ scale: 0.9 }}
           >
             Discover Now
