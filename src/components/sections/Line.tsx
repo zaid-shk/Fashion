@@ -4,14 +4,14 @@ import { motion } from "motion/react";
 
 const Line = () => {
   return (
-    <section className="py-16 md:py-20 px-4">
+    <section className="py-13 md:py-2 px-4">
       <div className="flex flex-col items-center justify-center max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-8"
+          className="text-center mb-2"
         >
           <span className="text-gray-300 text-4xl md:text-5xl font-serif leading-none">
             &ldquo;
@@ -49,6 +49,7 @@ const Line = () => {
           viewport={{ once: true }}
           className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent w-full max-w-xs mt-8"
         />
+        <div className="text-[20vw] flex items-center justify-center"><h1 className="text-black/10 tracking-widest">Vastraq</h1></div>
       </div>
     </section>
   );

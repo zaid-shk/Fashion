@@ -1,5 +1,7 @@
 "use client";
 
+import Line from "../sections/Line";
+
 export const Facebook = ({ size = 24, color = "#000000" }) => (
   <svg
     width={size}
@@ -73,7 +75,8 @@ export const Instagram = ({ size = 24, color = "#000000" }) => (
 
 const Footer = () => {
   return (
-    <footer className="bg-[#fdfaf4] px-4 md:px-10 py-8 md:py-10 text-[#222]">
+    <footer className="bg-[#fdfaf4] px-4 md:px-10 py-8 md:py-2 text-[#222]">
+      {/* <Line /> */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <div>
           <h2 className="text-xl md:text-2xl font-bold">
@@ -131,6 +134,7 @@ const Footer = () => {
         <p>Terms of Service</p>
         <p>Privacy Policy</p>
       </div>
+
     </footer>
   );
 };

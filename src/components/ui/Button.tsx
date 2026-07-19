@@ -87,11 +87,11 @@ const Button = ({
           Loading...
         </>
       ) : (
-        <>
+        <div className="flex justify-center items-center gap-1">
           {leftIcon}
           {children}
           {rightIcon}
-        </>
+        </div>
       )}
     </motion.button>
   );

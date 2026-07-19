@@ -13,7 +13,7 @@ export default function Home() {
       <FeaturedCategories />
       <Collections />
       <BestSeller />
-      <Line />
+      {/* <Line /> */}
     </div>
   );
 }

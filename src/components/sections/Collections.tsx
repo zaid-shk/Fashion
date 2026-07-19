@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { easeIn, easeOut } from "motion";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
+import { useLenisResize } from "@/components/providers/LenisProvider";
 
 type Product = {
   id: number;
@@ -86,6 +87,11 @@ const filters = ["All", "trending", "New", "summer", "Bestsellers"];
 const Collections = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [visibleCount, setVisibleCount] = useState(4);
+  const { resize } = useLenisResize();
+
+  useEffect(() => {
+    resize();
+  }, [visibleCount]);
 
   const filtered =
     activeFilter === "All"
