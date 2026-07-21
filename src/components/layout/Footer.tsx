@@ -1,6 +1,8 @@
 "use client";
 
 import Line from "../sections/Line";
+import { motion } from "motion/react";
+import Link from "next/link";
 
 export const Facebook = ({ size = 24, color = "#000000" }) => (
   <svg
@@ -101,22 +103,22 @@ const Footer = () => {
         <div className="flex justify-start md:justify-end gap-16 md:gap-20">
           <div>
             <h3 className="font-bold">Shop</h3>
-            <div className="mt-4 space-y-2 text-sm text-gray-400">
-              <p>Men</p>
-              <p>Women</p>
-              <p>New Collections</p>
-              <p>Summer 26&apos;</p>
-              <p>By Popular Brands</p>
+            <div className="mt-4 space-y-2 flex flex-col text-sm text-gray-400">
+              <Link href={"/men"}><motion.p whileHover={{ color: 'black' }}>Men</motion.p></Link>
+              <Link href={"/women"}><motion.p whileHover={{color:"black"}}>Women</motion.p></Link>
+              <Link href={"/newcollections"}><motion.p whileHover={{color:"black"}}>New Collections</motion.p></Link>
+              <Link href={"/summer26"}><motion.p whileHover={{color:"black"}}>Summer 26&apos;</motion.p></Link>
+              <Link href={"/brands"}><motion.p whileHover={{color:"black"}}>By Popular Brands</motion.p></Link>
             </div>
           </div>
           <div>
             <h3 className="font-bold">Company</h3>
-            <div className="mt-4 space-y-2 text-sm text-gray-400">
-              <p>About Us</p>
-              <p>Careers</p>
-              <p>Resources</p>
-              <p>Support Us</p>
-              <p>Contact Us</p>
+            <div className="mt-4 space-y-2 text-sm flex flex-col text-gray-400">
+              <Link href={"/about"}><motion.p whileHover={{ color: 'black' }}>About Us</motion.p></Link>
+              <Link href={"/careers"}><motion.p whileHover={{color:"black"}}>Careers</motion.p></Link>
+              <Link href={"/resources"}><motion.p whileHover={{color:"black"}}>Resources</motion.p></Link>
+              <Link href={"/support"}><motion.p whileHover={{color:"black"}}>Support Us</motion.p></Link>
+              <Link href={"/contact"}><motion.p whileHover={{color:"black"}}>Contact Us</motion.p></Link>
             </div>
           </div>
         </div>
@@ -129,10 +131,10 @@ const Footer = () => {
       </div>
 
       <div className="mt-8 md:mt-10 flex flex-wrap gap-y-2 justify-between text-sm text-gray-600">
-        <p>&copy;Clothes.co</p>
-        <p>All Rights Reserved</p>
-        <p>Terms of Service</p>
-        <p>Privacy Policy</p>
+        <motion.p whileHover={{ color: 'black' }}>&copy;Clothes.co</motion.p>
+        <motion.p whileHover={{ color: 'black' }}>All Rights Reserved</motion.p>
+        <motion.p whileHover={{ color: 'black' }}>Terms of Service</motion.p>
+        <motion.p whileHover={{ color: 'black' }}>Privacy Policy</motion.p>
       </div>
 
     </footer>

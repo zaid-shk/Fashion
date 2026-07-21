@@ -81,7 +81,7 @@ const Navbar = ({
           {showIcons && (
             <>
               <User size={18} className="md:size-5" fill="black" />
-              <ShoppingCart size={18} className="md:size-5" fill="black" />
+              <Link href={'/cart'}> <ShoppingCart size={18} className="md:size-5" fill="black" /></Link>
               <Heart size={18} className="md:size-5" fill="black" />
             </>
           )}

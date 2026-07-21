@@ -115,3 +115,8 @@ body {
     height 0.4s ease,
     width 0.4s ease;
 }
+
+::selection {
+  background-color: var(--teal);
+  color: white;
+}

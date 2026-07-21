@@ -4,6 +4,7 @@ import NavbarWrapper from "@/components/layout/NavbarWrapper";
 import Footer from "@/components/layout/Footer";
 import LenisProvider from "@/components/providers/LenisProvider";
 import CursorProvider from "@/components/providers/CursorProvider";
+import StoreProvider from "@/lib/StoreProvider";
 
 export const metadata: Metadata = {
   title: "Fashion",
@@ -18,13 +19,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased cursor-none">
       <body>
-        <LenisProvider>
-          <CursorProvider>
-            <NavbarWrapper />
-            {children}
-            <Footer />
-          </CursorProvider>
-        </LenisProvider>
+        <StoreProvider>
+          <LenisProvider>
+            <CursorProvider>
+              <NavbarWrapper />
+              {children}
+              <Footer />
+            </CursorProvider>
+          </LenisProvider>
+        </StoreProvider>
       </body>
     </html>
   );
