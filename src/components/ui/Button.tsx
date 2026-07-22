@@ -53,7 +53,7 @@ const Button = ({
   transition,
   animate,
 }: ButtonProps) => {
-  const variants = {
+  const baseVariants = {
     primary: "bg-black text-white hover:bg-zinc-800",
     secondary: "bg-white text-black border border-black hover:bg-zinc-100",
     outline: "border border-black text-black hover:bg-black hover:text-white",
@@ -62,6 +62,10 @@ const Button = ({
     danger: "bg-red-500 text-white hover:bg-red-600",
   };
 
+  const variantClasses = whileHover
+    ? baseVariants[variant].replace(/hover:\S+/g, "").trim()
+    : baseVariants[variant];
+
   return (
     <motion.button
       type={type}
@@ -69,7 +73,7 @@ const Button = ({
       onClick={onClick}
       className={clsx(
         "inline-flex items-center justify-center gap-2 ",
-        variants[variant],
+        variantClasses,
         (disabled || loading) && "cursor-not-allowed opacity-50",
         className,
       )}

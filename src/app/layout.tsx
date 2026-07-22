@@ -4,7 +4,8 @@ import NavbarWrapper from "@/components/layout/NavbarWrapper";
 import Footer from "@/components/layout/Footer";
 import LenisProvider from "@/components/providers/LenisProvider";
 import CursorProvider from "@/components/providers/CursorProvider";
-import StoreProvider from "@/lib/StoreProvider";
+import StoreProvider from "@/lib/redux/StoreProvider";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Fashion",
@@ -25,6 +26,7 @@ export default function RootLayout({
               <NavbarWrapper />
               {children}
               <Footer />
+              <Toaster position="top-right" toastOptions={{ duration: 2000 }} />
             </CursorProvider>
           </LenisProvider>
         </StoreProvider>

@@ -4,13 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { Trash2, Minus, Plus, ShoppingBag, ArrowLeft } from "lucide-react";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import {
   removeFromCart,
   updateQuantity,
   clearCart,
-} from "@/lib/features/cartSlice";
+} from "@/lib/redux/slices/cartSlice";
+import { toggleWishlist } from "@/lib/redux/slices/wishlistSlice";
 import Button from "@/components/ui/Button";
+import toast from "react-hot-toast";
 
 export default function CartPage() {
   const dispatch = useAppDispatch();
@@ -66,11 +68,11 @@ export default function CartPage() {
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
-            Shopping Cart
+            My Shopping Cart
           </h1>
           <button
             onClick={() => dispatch(clearCart())}
-            className="text-sm text-black/40 hover:text-red-500 transition-colors tracking-wide underline underline-offset-4"
+            className="text-sm font-bold text-black/40 hover:text-red-500 transition-colors tracking-wider underline underline-offset-4"
           >
             Clear All
           </button>
@@ -94,27 +96,12 @@ export default function CartPage() {
                     className="object-cover"
                   />
                 </div>
-
-                <div className="flex flex-col justify-between flex-1 min-w-0">
-                  <div>
-                    <div className="flex justify-between items-start gap-2">
-                      <h3 className="text-sm md:text-base font-medium truncate">
-                        {item.title}
-                      </h3>
-                      <button
-                        onClick={() => dispatch(removeFromCart(item.id))}
-                        className="text-black/20 hover:text-red-500 transition-colors shrink-0"
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
-                    <p className="text-sm md:text-base font-semibold mt-1 tracking-widest">
-                      {item.price}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-between mt-2">
-                    <div className="flex items-center gap-1 border border-black/10 rounded-lg overflow-hidden">
+                <div className="flex flex-1 min-w-0 flex-col gap-1">
+                  <div className="flex justify-between gap-3">
+                    <h3 className="text-sm md:text-base font-medium truncate">
+                      {item.title}
+                    </h3>
+                    <div className="flex items-center gap-1 border border-black/10 rounded-lg overflow-hidden shrink-0">
                       <button
                         onClick={() =>
                           dispatch(
@@ -145,9 +132,22 @@ export default function CartPage() {
                         <Plus size={14} />
                       </button>
                     </div>
-                    <p className="text-sm font-semibold tracking-widest">
-                      ${(item.priceNum * item.quantity).toLocaleString()}
-                    </p>
+                  </div>
+                  <p className="text-sm md:text-base font-semibold tracking-widest">
+                    {item.price}
+                  </p>
+                  <div className="flex justify-between items-center mt-4">
+                    <Button onClick={() => { dispatch(toggleWishlist({ id: item.id, title: item.title, price: item.price, priceNum: item.priceNum, image: item.image })); toast.success("Added to wishlist!"); }} children='Move to Wishlist' className="px-4 py-3 w-full mr-5 rounded-lg border border-[#1f1f1f1f] tracking-wider" animate={{ backgroundColor: "white", color: "black" }} whileHover={{ backgroundColor: 'black', color: 'white', transition: { duration: 0.5 } }}
+                      whileTap={{ scale: 0.95 }} />
+
+                    <motion.button
+                      onClick={() => dispatch(removeFromCart(item.id))}
+                      className="text-white/90 bg-black/40 backdrop-blur-md px-3.5 py-3.5 rounded-full shrink-0"
+                      whileHover={{ backgroundColor: "Red", color: 'white', transition: { duration: 0.3 } }}
+                      whileTap={{ scale: 0.90 }}
+                    >
+                      <Trash2 size={19} />
+                    </motion.button>
                   </div>
                 </div>
               </motion.div>
@@ -155,7 +155,7 @@ export default function CartPage() {
           </div>
 
           <div className="lg:w-80 shrink-0">
-            <div className="border border-[#1f1f1f1f] rounded-2xl p-5 md:p-6 sticky top-24">
+            <div className="border h-80 border-[#1f1f1f1f] rounded-2xl p-5 md:p-6 sticky top-24">
               <h2 className="text-lg font-bold tracking-tight mb-4">
                 Order Summary
               </h2>

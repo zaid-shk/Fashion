@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { User, ShoppingCart, Heart, Menu, X } from "lucide-react";
 import SearchBar from "@/components/ui/SearchBar";
+import { useAppSelector } from "@/lib/redux/hooks";
 
 type LinkItem = {
   to: string;
@@ -38,6 +39,8 @@ const Navbar = ({
   className = "",
 }: NavbarProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const cartCount = useAppSelector((s) => s.cart.items.length);
+  const wishlistCount = useAppSelector((s) => s.wishlist.items.length);
 
   return (
     <nav
@@ -81,8 +84,22 @@ const Navbar = ({
           {showIcons && (
             <>
               <User size={18} className="md:size-5" fill="black" />
-              <Link href={'/cart'}> <ShoppingCart size={18} className="md:size-5" fill="black" /></Link>
-              <Heart size={18} className="md:size-5" fill="black" />
+              <Link href={'/cart'} className="relative">
+                <ShoppingCart size={18} className="md:size-5" fill="black" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-black text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center leading-none">
+                    {cartCount}
+                  </span>
+                )}
+              </Link>
+              <Link href={'/wishlist'} className="relative">
+                <Heart size={18} className="md:size-5" fill="black" />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-black text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center leading-none">
+                    {wishlistCount}
+                  </span>
+                )}
+              </Link>
             </>
           )}
           <button

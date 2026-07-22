@@ -2,9 +2,9 @@
 
 import { useState, useCallback } from "react";
 import SecondNav from "@/components/layout/SecondNav";
-import Filter, { type FilterState } from "@/components/sections/Filter";
-import ShortBy from "@/components/sections/ShortBy";
-import Products from "./Components/Products";
+import Filter, { type FilterState } from "@/components/products/Filter";
+import ShortBy from "@/components/products/ShortBy";
+import Products from "@/components/products/MenProducts";
 
 export default function MenPage() {
   const [sortBy, setSortBy] = useState("Featured");

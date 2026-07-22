@@ -6,113 +6,25 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import { Heart, ShoppingCart, ChevronLeft, ChevronRight } from "lucide-react";
 import Button from "@/components/ui/Button";
-
-const products = [
-  {
-    id: "1",
-    image:
-      "https://i.pinimg.com/736x/af/bb/06/afbb062db79a6cad71a87c5d0d2d6d5b.jpg",
-    title: "Linen Blend Lavender Shirt",
-    price: "$5,600",
-    description:
-      "Handcrafted linen-blend shirt with a relaxed fit. Perfect for summer days with a breathable fabric that keeps you cool and stylish.",
-    category: "Men",
-    sizes: ["S", "M", "L", "XL"],
-    colors: ["#8B5E3C", "#2D4A3E", "#1A1A1A", "#D4C5B0"],
-  },
-  {
-    id: "2",
-    image:
-      "https://i.pinimg.com/736x/08/5c/0a/085c0ad135f525871cc48848f004e3b4.jpg",
-    title: "Linen Blend Lavender Shirt",
-    price: "$5,600",
-    description:
-      "Handcrafted linen-blend shirt with a relaxed fit. Perfect for summer days with a breathable fabric that keeps you cool and stylish.",
-    category: "Women",
-    sizes: ["S", "M", "L", "XL"],
-    colors: ["#5B4B3C", "#2D4A3E", "#1A1A1A"],
-  },
-  {
-    id: "3",
-    image:
-      "https://i.pinimg.com/1200x/72/2c/91/722c912d31ec627c640127d08314eb7b.jpg",
-    title: "Linen Blend Lavender Shirt",
-    price: "$5,600",
-    description:
-      "Handcrafted linen-blend shirt with a relaxed fit. Perfect for summer days with a breathable fabric that keeps you cool and stylish.",
-    category: "New Arrivals",
-    sizes: ["S", "M", "L"],
-    colors: ["#8B5E3C", "#1A1A1A", "#D4C5B0"],
-  },
-  {
-    id: "4",
-    image:
-      "https://i.pinimg.com/736x/ca/0e/67/ca0e6738acbbd25bb708bce4fb1c17f2.jpg",
-    title: "Linen Blend Lavender Shirt",
-    price: "$5,600",
-    description:
-      "Handcrafted linen-blend shirt with a relaxed fit. Perfect for summer days with a breathable fabric that keeps you cool and stylish.",
-    category: "Men",
-    sizes: ["M", "L", "XL"],
-    colors: ["#2D4A3E", "#1A1A1A"],
-  },
-  {
-    id: "5",
-    image:
-      "https://i.pinimg.com/736x/86/ab/70/86ab700715f8d14e48488784a6d7606e.jpg",
-    title: "Linen Blend Lavender Shirt",
-    price: "$5,600",
-    description:
-      "Handcrafted linen-blend shirt with a relaxed fit. Perfect for summer days with a breathable fabric that keeps you cool and stylish.",
-    category: "Women",
-    sizes: ["S", "M", "L", "XL"],
-    colors: ["#8B5E3C", "#D4C5B0"],
-  },
-  {
-    id: "6",
-    image:
-      "https://i.pinimg.com/736x/3e/e7/b9/3ee7b93ded7291cbd2a6ec7aa57bc140.jpg",
-    title: "Linen Blend Lavender Shirt",
-    price: "$5,600",
-    description:
-      "Handcrafted linen-blend shirt with a relaxed fit. Perfect for summer days with a breathable fabric that keeps you cool and stylish.",
-    category: "New Arrivals",
-    sizes: ["S", "M", "L", "XL"],
-    colors: ["#5B4B3C", "#2D4A3E"],
-  },
-  {
-    id: "7",
-    image:
-      "https://i.pinimg.com/736x/67/2b/98/672b98700a36f4a73d7b85f6147c5846.jpg",
-    title: "Linen Blend Lavender Shirt",
-    price: "$5,600",
-    description:
-      "Handcrafted linen-blend shirt with a relaxed fit. Perfect for summer days with a breathable fabric that keeps you cool and stylish.",
-    category: "Men",
-    sizes: ["S", "M", "XL"],
-    colors: ["#8B5E3C", "#1A1A1A", "#D4C5B0"],
-  },
-  {
-    id: "8",
-    image:
-      "https://i.pinimg.com/736x/41/8e/6b/418e6b25838b802051a09835fcac7eba.jpg",
-    title: "Linen Blend Lavender Shirt",
-    price: "$5,600",
-    description:
-      "Handcrafted linen-blend shirt with a relaxed fit. Perfect for summer days with a breathable fabric that keeps you cool and stylish.",
-    category: "Women",
-    sizes: ["S", "M", "L"],
-    colors: ["#2D4A3E", "#D4C5B0", "#5B4B3C"],
-  },
-];
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+import { addToCart } from "@/lib/redux/slices/cartSlice";
+import { toggleWishlist } from "@/lib/redux/slices/wishlistSlice";
+import { selectAllProducts } from "@/lib/redux/slices/productSlice";
+import toast from "react-hot-toast";
 
 export default function ProductDetail() {
   const { id } = useParams();
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [imageIndex, setImageIndex] = useState(0);
+  const dispatch = useAppDispatch();
+  const allProducts = useAppSelector(selectAllProducts);
+  const wishlistItems = useAppSelector((s) => s.wishlist.items);
+  const isLiked = wishlistItems.some((i) => i.id === Number(id));
 
-  const product = products.find((p) => p.id === id) || products[0];
+  const parsePriceNum = (price: string) => Number(price.replace(/[^0-9]/g, ""));
+
+  const product = allProducts.find((p) => p.id === Number(id)) || allProducts[0];
   const images = [product.image, product.image, product.image];
 
   return (
@@ -202,7 +114,7 @@ export default function ProductDetail() {
           <div>
             <p className="text-sm font-semibold tracking-wider mb-3">SIZE</p>
             <div className="flex flex-wrap gap-3">
-              {product.sizes.map((size) => (
+              {(product.sizes ?? ["S", "M", "L", "XL"]).map((size) => (
                 <button
                   key={size}
                   onClick={() => setSelectedSize(size)}
@@ -221,7 +133,7 @@ export default function ProductDetail() {
           <div>
             <p className="text-sm font-semibold tracking-wider mb-3">COLOR</p>
             <div className="flex gap-3">
-              {product.colors.map((color) => (
+              {(product.colors ?? ["#1A1A1A", "#D4C5B0"]).map((color) => (
                 <button
                   key={color}
                   onClick={() => setSelectedColor(color)}
@@ -241,6 +153,7 @@ export default function ProductDetail() {
               className="flex-1 py-3 rounded-xl text-base tracking-wider"
               variant="primary"
               whileTap={{ scale: 0.95 }}
+              onClick={() => { dispatch(addToCart({ id: Number(product.id), title: product.title, price: product.price, priceNum: parsePriceNum(product.price), image: product.image })); toast.success("Added to cart!"); }}
             >
               <ShoppingCart size={18} />
               Add to Cart
@@ -249,8 +162,9 @@ export default function ProductDetail() {
               className="w-12 h-12 rounded-xl flex items-center justify-center"
               variant="outline"
               whileTap={{ scale: 0.95 }}
+              onClick={() => { dispatch(toggleWishlist({ id: Number(product.id), title: product.title, price: product.price, priceNum: parsePriceNum(product.price), image: product.image })); toast.success(isLiked ? "Removed from wishlist" : "Added to wishlist!"); }}
             >
-              <Heart size={18} />
+              <Heart size={18} fill={isLiked ? "#ef4444" : "none"} color={isLiked ? "#ef4444" : "currentColor"} />
             </Button>
           </div>
 
