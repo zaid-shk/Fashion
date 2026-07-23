@@ -8,7 +8,12 @@ export default function CursorProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [hovering, setHovering] = useState(false);
+
+  useEffect(() => {
+    setIsTouchDevice(window.matchMedia("(pointer: coarse)").matches);
+  }, []);
 
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
@@ -54,31 +59,35 @@ export default function CursorProvider({
     <>
       {children}
 
-      <motion.div
-        className="fixed top-0 left-0 z-[9999] pointer-events-none"
-        style={{ x: cursorX, y: cursorY }}
-      >
+      {!isTouchDevice && (
         <motion.div
-          className="-translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#1f1f1f]"
-          animate={{
-            width: hovering ? 56 : 36,
-            height: hovering ? 56 : 36,
-            backgroundColor: hovering ? "rgba(31,31,31,0.08)" : "transparent",
-          }}
-          transition={{ duration: 0.25 }}
-        />
-      </motion.div>
+          className="fixed top-0 left-0 z-[9999] pointer-events-none"
+          style={{ x: cursorX, y: cursorY }}
+        >
+          <motion.div
+            className="-translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#1f1f1f]"
+            animate={{
+              width: hovering ? 56 : 36,
+              height: hovering ? 56 : 36,
+              backgroundColor: hovering ? "rgba(31,31,31,0.08)" : "transparent",
+            }}
+            transition={{ duration: 0.25 }}
+          />
+        </motion.div>
+      )}
 
-      <motion.div
-        className="fixed top-0 left-0 z-[9999] pointer-events-none -translate-x-1/2 -translate-y-1/2"
-        style={{ x: dotX, y: dotY }}
-      >
+      {!isTouchDevice && (
         <motion.div
-          className="h-2 w-2 rounded-full bg-[#1f1f1f]"
-          animate={{ scale: hovering ? 0.6 : 1 }}
-          transition={{ duration: 0.2 }}
-        />
-      </motion.div>
+          className="fixed top-0 left-0 z-[9999] pointer-events-none -translate-x-1/2 -translate-y-1/2"
+          style={{ x: dotX, y: dotY }}
+        >
+          <motion.div
+            className="h-2 w-2 rounded-full bg-[#1f1f1f]"
+            animate={{ scale: hovering ? 0.6 : 1 }}
+            transition={{ duration: 0.2 }}
+          />
+        </motion.div>
+      )}
     </>
   );
 }

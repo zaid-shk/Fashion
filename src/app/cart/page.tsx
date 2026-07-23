@@ -13,6 +13,8 @@ import {
 import { toggleWishlist } from "@/lib/redux/slices/wishlistSlice";
 import Button from "@/components/ui/Button";
 import toast from "react-hot-toast";
+import Address from "@/components/sections/Address";
+import SearchBar from "@/components/ui/SearchBar";
 
 export default function CartPage() {
   const dispatch = useAppDispatch();
@@ -24,6 +26,7 @@ export default function CartPage() {
   if (items.length === 0) {
     return (
       <main className="min-h-screen flex items-center justify-center px-4">
+
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -77,9 +80,10 @@ export default function CartPage() {
             Clear All
           </button>
         </div>
-
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex-1 space-y-4">
+            <Address />
+
             {items.map((item, index) => (
               <motion.div
                 key={item.id}
@@ -176,13 +180,20 @@ export default function CartPage() {
                   </span>
                 </div>
               </div>
-              <Button
-                variant="primary"
-                className="w-full mt-6 py-2.5 tracking-wider rounded-lg text-sm"
-                whileTap={{ scale: 0.95 }}
-              >
-                Checkout — ${subtotal.toLocaleString()}
-              </Button>
+              <div className="relative">
+
+                <SearchBar placeholder='Coupun' className="w-full mt-3 py-1.5 tracking-wider rounded-lg text-xl outline-1" icon={false} />
+                <Button children='verify' className="absolute top-0.5 right-0.5 px-5 py-1.5 rounded-lg" />
+              </div>
+              <Link href={'/checkout'}>
+                <Button
+                  variant="primary"
+                  className="w-full mt-3 py-2.5 tracking-wider rounded-lg text-sm"
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Checkout — ${subtotal.toLocaleString()}
+                </Button>
+              </Link>
               <Link href="/men">
                 <Button
                   variant="outline"

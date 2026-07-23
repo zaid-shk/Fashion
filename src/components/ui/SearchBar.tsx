@@ -8,6 +8,7 @@ type SearchBarProps = {
   inputClassName?: string;
   iconSize?: number;
   value?: string;
+  icon?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSearch?: (value: string) => void;
 };
@@ -16,6 +17,7 @@ const SearchBar = ({
   placeholder = "Search",
   className = "",
   inputClassName = "",
+  icon = true,
   iconSize = 16,
   value,
   onChange,
@@ -29,7 +31,7 @@ const SearchBar = ({
 
   return (
     <div className={`flex items-center ${className}`}>
-      <Search size={iconSize} />
+      {icon && <Search size={iconSize} />}
       <input
         type="text"
         name="search"

@@ -19,6 +19,8 @@ type ButtonProps = {
 
   loading?: boolean;
 
+  initial?: TargetAndTransition | false;
+
   onClick?: () => void;
 
   className?: string;
@@ -41,6 +43,7 @@ const Button = ({
   type = "button",
   disabled = false,
   loading = false,
+  initial,
   onClick,
   className = "",
   leftIcon,
@@ -77,6 +80,7 @@ const Button = ({
         (disabled || loading) && "cursor-not-allowed opacity-50",
         className,
       )}
+      initial={initial}
       whileHover={whileHover}
       whileTap={whileTap}
       whileDrag={whileDrag}
